@@ -10,7 +10,7 @@
       <p hidden><%= post._id %></p>
       <div class="imgArea">
         <% if(post.postImgPath == null){ %>
-        <img src="/public/noImg.png" alt="이미지 없음" />
+        <img src="noImg.png" alt="이미지 없음" />
         <% } else { %>
         <img src="<%= post.postImgPath %>" alt="<%= post.title %>" />
         <% } %>
