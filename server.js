@@ -90,7 +90,7 @@ app.get('/getPosts', async (req, res) => {
   const page = req.query.page || 1;
   // const postsPerPage = req.query.postsPerPage || 3
   const postsPerPage = 3;
-  const skip = (page - 1) * postsPerPage // 1:0, 2:3
+  const skip = 3 + (page - 1) * postsPerPage  //1:0, 2:3
 
   try{
     const db = await getDB();
