@@ -1,0 +1,335 @@
+.wrap {
+  overflow: hidden;
+}
+/* header 영역 */
+.mw {
+  max-width: 1216px;
+  width: calc(100% - 4rem);
+  margin: auto;
+}
+.hd {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 2rem;
+  padding: 2rem 0;
+}
+.hd h1 {
+  font-weight: bold;
+}
+.hd nav {
+  /* 굳이 div로 나누지 않아도 정렬하는 방법 */
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+  /* 큰 덩어리보다 작은 덩어리는 gap 값이 작으면 좋음 */
+  gap: 1rem;
+}
+.hd nav a {
+  padding: 0.5rem 1rem;
+}
+.hd .darkMode {
+  border: 2px solid navy;
+  padding: 0.5rem 1rem;
+  background-color: transparent;
+  border-radius: 100px;
+  display: flex;
+  gap: 1rem;
+  position: relative;
+  cursor: pointer;
+}
+.darkMode::before {
+  content: "";
+  width: 20px;
+  height: 20px;
+  background-color: navy;
+  border-radius: 50%;
+  position: absolute;
+  transform: translate(30px, -2px);
+  transition: 0.3s;
+}
+.darkMode.on::before {
+  transform: translate(-2px, -2px);
+}
+.darkMode > i {
+  /* 이벤트 버블링에 의해 i 요소 클릭하면 이벤트가 실행되지 않음 */
+  /* i 요소를 클릭해도 클릭이벤트가 실행되도록 설정 */
+  pointer-events: none;
+}
+.ham {
+  display: none;
+}
+
+@media (max-width: 800px) {
+  .hd {
+    position: relative;
+    text-align: center;
+  }
+  .ham {
+    display: block;
+    position: absolute;
+    right: 0;
+    cursor: pointer;
+    z-index: 999;
+  }
+  .hd.on .ham {
+    right: 50%;
+    transform: translateX(50%);
+    top: 50px;
+  }
+  .hd nav,
+  .hd .darkMode {
+    display: none;
+  }
+
+  .hd.on {
+    background-color: antiquewhite;
+    position: fixed;
+    width: 100%;
+    height: 100vh;
+    flex-direction: column;
+    justify-content: center;
+    z-index: 100;
+  }
+  .hd.on nav {
+    flex-grow: 0;
+    flex-direction: column;
+  }
+  .hd.on nav,
+  .hd.on .darkMode {
+    display: flex;
+  }
+
+  .dark .hd.on {
+    background-color: navy;
+  }
+}
+
+/* 다크 모드 */
+.dark {
+  background-color: navy;
+  color: white;
+}
+.dark .darkMode {
+  background-color: transparent;
+  border-color: white;
+}
+.dark .darkMode:hover {
+  background-color: lightblue;
+}
+.dark .darkMode::before {
+  background-color: white;
+}
+
+/* main 영역 */
+main h2 {
+  font-weight: bold;
+  /* max-width 가 없는 디자인이면 vw 단위로 해도 문제없지만... */
+  font-size: 18vw;
+  text-align: center;
+  position: relative;
+  padding: 1rem 0 2rem 0;
+  white-space: nowrap;
+}
+main h2::before,
+main h2::after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 1px;
+  background-color: navy;
+  left: 50%;
+  transform: translateX(-50%);
+}
+main h2::before {
+  top: 0;
+}
+main h2::after {
+  bottom: 0;
+}
+main h3 {
+  font-size: 2rem;
+  margin: 2rem 0;
+}
+
+@media (max-width: 800px) {
+  main h2 {
+    font-size: 16vw;
+  }
+}
+
+@media (min-width: 1210px) {
+  main h2 {
+    font-size: 15rem;
+  }
+}
+
+/* lists 영역 */
+.lists {
+  display: grid;
+  /* 380px 이하로는 크기가 줄지 않고, 제일 클때는 1:1:1 로 하겠다 */
+  grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+  gap: 1rem;
+}
+.lists > li {
+  position: relative;
+}
+.lists .more {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: aliceblue;
+  opacity: 0;
+}
+.lists .imgArea {
+  padding-top: 60%;
+  position: relative;
+  /* border-radius: 1rem; */
+  overflow: hidden;
+  /* will-change: width; */
+  margin-bottom: 1rem;
+}
+.lists > li img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  filter: grayscale(100);
+  transition: 0.3s;
+}
+.lists .info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.lists .title {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.lists .title::before {
+  content: "\f061";
+  font-family: "Font Awesome 5 Free";
+  font-weight: 600;
+  position: absolute;
+  right: 0;
+  transform: rotate(-45deg);
+}
+.lists .desc {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+.lists > li:hover img {
+  filter: grayscale(0);
+  transform: translate(-50%, -50%) scale(1.1);
+}
+.lists > li:hover .title::before {
+  color: tomato;
+}
+
+footer {
+  padding: 2rem 0;
+}
+
+/* write page */
+.writecon {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: flex-start;
+}
+.writecon label {
+  width: 150px;
+  padding: 1rem 0;
+  margin-bottom: 1rem;
+}
+.writecon input,
+.writecon textarea {
+  box-sizing: border-box;
+  width: calc(100% - 150px);
+  margin-bottom: 1rem;
+  padding: 1rem;
+}
+.writecon textarea {
+  height: 200px;
+}
+.writecon button {
+  padding: 1rem;
+}
+.writecon .img {
+  width: 100%;
+}
+.writecon .img img {
+  width: 50%;
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+@media (max-width: 800px) {
+  .writecon {
+    flex-wrap: nowrap;
+    flex-direction: column;
+  }
+  .writecon label {
+    text-align: center;
+    border-bottom: 1px dotted lightgray;
+  }
+  .writecon > * {
+    width: 100% !important  ;
+  }
+}
+
+/* 상세페이지 */
+.detail .img img {
+  width: 100%;
+}
+
+/* 개인페이지 */
+.personal ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+}
+.personal li {
+  width: 20%;
+}
+.personal li img {
+  width: 100%;
+  height: 10vw;
+  object-fit: cover;
+}
+
+/* 댓글 영역 */
+#commentsForm {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 1rem;
+}
+.comments textarea {
+  width: 80%;
+}
+.comment {
+  padding: 1rem 0;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  border-bottom: 1px dotted lightgray;
+}
+.comment p {
+  border: 1px solid red;
+}
+.comment p:first-of-type {
+  flex: 1;
+}
